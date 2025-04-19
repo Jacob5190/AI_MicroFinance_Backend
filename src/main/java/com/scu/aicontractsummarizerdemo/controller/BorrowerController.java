@@ -49,7 +49,6 @@ public class BorrowerController {
             borrower.setYearEstablished(request.getYearEstablished());
             borrower.setBusinessType(request.getBusinessType());
             borrower.setBusinessDescription(request.getBusinessDescription());
-            System.out.println(request.getBusinessDescription());
             borrowerService.save(borrower);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();

@@ -5,5 +5,6 @@ public enum LoanStatus {
     ACCEPTED_BY_LENDER,
     BORROWER_CONFIRMED,
     APPROVED,
+    REJECTED,
     INVALID
 }
