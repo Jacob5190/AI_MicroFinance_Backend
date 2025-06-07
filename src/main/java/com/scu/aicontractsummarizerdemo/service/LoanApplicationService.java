@@ -36,6 +36,10 @@ public class LoanApplicationService {
         return loanApplicationRepository.save(loan);
     }
 
+    public LoanApplication getLoanApplicationById(Long id) {
+        return loanApplicationRepository.findById(id).orElse(null);
+    }
+
     public List<LoanApplication> getAcceptedLoanApplications(long id) {
         return loanApplicationRepository.findByLenderIdAndStatusIsNot(id, LoanStatus.PENDING);
     }

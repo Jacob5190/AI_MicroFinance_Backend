@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.findByEmail(email).isPresent();
     }
 
+    public Borrower getBorrowerById(Long userId) {
+        return borrowerRepository.findById(userId).orElse(null);
+    }
+
     @Transactional
     public User registerUser(String email, String password, String firstName, String lastName, String phone, Role role) {
         User user = new User();

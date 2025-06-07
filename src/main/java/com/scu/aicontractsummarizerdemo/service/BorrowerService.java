@@ -5,6 +5,8 @@ import com.scu.aicontractsummarizerdemo.repository.BorrowerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class BorrowerService {
     private final BorrowerRepository borrowerRepository;
@@ -20,5 +22,9 @@ public class BorrowerService {
     @Transactional
     public void save(Borrower borrower) {
         borrowerRepository.save(borrower);
+    }
+
+    public List<Borrower> findAll() {
+        return borrowerRepository.findAll();
     }
 }

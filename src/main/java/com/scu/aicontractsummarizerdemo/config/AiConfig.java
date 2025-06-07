@@ -12,7 +12,7 @@ public class AiConfig {
     @Value("${openai.api-key}")
     private String apiKey;
 
-    @Value("{openai.model}")
+    @Value("${openai.model}")
     private String model;
 
     @Bean

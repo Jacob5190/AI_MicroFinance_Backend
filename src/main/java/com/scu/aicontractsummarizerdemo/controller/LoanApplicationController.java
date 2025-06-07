@@ -2,11 +2,10 @@ package com.scu.aicontractsummarizerdemo.controller;
 
 import com.scu.aicontractsummarizerdemo.dto.AcceptLoanRequest;
 import com.scu.aicontractsummarizerdemo.dto.LoanApplicationRequest;
+import com.scu.aicontractsummarizerdemo.entity.Borrower;
 import com.scu.aicontractsummarizerdemo.entity.LoanApplication;
 import com.scu.aicontractsummarizerdemo.entity.LoanDocument;
-import com.scu.aicontractsummarizerdemo.service.FileStorageService;
-import com.scu.aicontractsummarizerdemo.service.LoanApplicationService;
-import com.scu.aicontractsummarizerdemo.service.LoanDocumentService;
+import com.scu.aicontractsummarizerdemo.service.*;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +22,46 @@ public class LoanApplicationController {
     private final FileStorageService fileStorageService;
     private final LoanDocumentService loanDocumentService;
 
-    public LoanApplicationController(LoanApplicationService loanApplicationService, FileStorageService fileStorageService, LoanDocumentService loanDocumentService) {
+    private final UserService userService;
+    private final BorrowerService borrowerService;
+
+    public LoanApplicationController(LoanApplicationService loanApplicationService, FileStorageService fileStorageService, LoanDocumentService loanDocumentService, UserService userService, BorrowerService borrowerService) {
         this.loanApplicationService = loanApplicationService;
         this.fileStorageService = fileStorageService;
         this.loanDocumentService = loanDocumentService;
+        this.userService = userService;
+        this.borrowerService = borrowerService;
+    }
+
+    @GetMapping("/{loanId}")
+    public ResponseEntity<LoanApplication> getLoanApplicationWithId(@PathVariable Long loanId) {
+        LoanApplication loanApplication = loanApplicationService.getLoanApplicationById(loanId);
+        if (loanApplication == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(loanApplication);
+        }
+    }
+
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Borrower> getUser(@PathVariable Long userId) {
+        Borrower borrower = userService.getBorrowerById(userId);
+        if (borrower == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(borrower);
+        }
+    }
+
+    @GetMapping("/borrowers")
+    public ResponseEntity<List<Borrower>> getAllBorrowers() {
+        List<Borrower> borrowers = borrowerService.findAll();
+        if (borrowers.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(borrowers);
+        }
     }
 
     @PostMapping("/borrower/apply")
